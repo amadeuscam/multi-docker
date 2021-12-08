@@ -1,0 +1,23 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t amadeuscam/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run amadeuscam/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t amadeuscam/multi-client ./client
+  - docker build -t amadeuscam/multi-nginx ./nginx
+  - docker build -t amadeuscam/multi-server ./server
+  - docker build -t amadeuscam/multi-worker ./worker
+  #log in to the docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  #take those imagse and push them to docker hub
+  - docker push amadeuscam/multi-client
+  - docker push amadeuscam/multi-nginx
+  - docker push amadeuscam/multi-server
+  - docker push amadeuscam/multi-worker
