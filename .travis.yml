@@ -22,3 +22,4 @@ after_success:
   - docker push amadeuscam/multi-server
   - docker push amadeuscam/multi-worker
   
+  
