@@ -21,6 +21,13 @@ const pgClient = new Pool({
 
 pgClient.on("connect", (client) => {
   client
+    .query("CREATE  DATABASE fibvalues")
+    .catch((err) => console.error(err));
+});
+
+
+pgClient.on("connect", (client) => {
+  client
     .query("CREATE TABLE IF NOT EXISTS values (number INT)")
     .catch((err) => console.error(err));
 });
