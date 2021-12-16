@@ -19,11 +19,6 @@ const pgClient = new Pool({
   port: keys.pgPort,
 });
 
-pgClient.on("connect", (client) => {
-  client
-    .query("CREATE  DATABASE fibvalues")
-    .catch((err) => console.error(err));
-});
 
 
 pgClient.on("connect", (client) => {
